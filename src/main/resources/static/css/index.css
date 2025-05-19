@@ -409,7 +409,6 @@ input:focus {
     line-height: 1.5;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .advantages-grid {
         grid-template-columns: 1fr;
