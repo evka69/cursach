@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Детали заказа №<span th:text="${order.id}">123</span></title>
+    <link rel="stylesheet" href="/css/order-details.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+<div th:replace="~{layoutFragments/header :: header}"></div>
+
+<div class="main-content">
+    <div class="order-details-container">
+        <h2>Детали заказа №<span th:text="${order.id}">123</span></h2>
+        <p><strong>Дата оформления:</strong> <span th:text="${#temporals.format(order.createdAt, 'dd.MM.yyyy HH:mm')}">01.01.2023 12:00</span></p>
+        <p><strong>Адрес доставки:</strong> <span th:text="${order.deliveryAddress}">г. Москва, ул. Ленина, д. 10, кв. 5</span></p>
+        <p><strong>Email для связи:</strong> <span th:text="${order.email}">example@mail.com</span></p>
+        <p><strong>Способ оплаты:</strong>
+            <span th:text="${order.paymentMethod == 'CASH' ? 'Наличными при получении' : 'Картой онлайн'}">Наличными при получении</span>
+        </p>
+        <p><strong>Комментарий к заказу:</strong> <span th:text="${order.comment != null ? order.comment : 'Отсутствует'}">Комментарий</span></p>
+
+        <h3>Товары в заказе</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Название</th>
+                <th>Количество</th>
+                <th>Цена за единицу</th>
+                <th>Сумма</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${order.items}">
+                <td th:text="${item.product.name}">Товар 1</td>
+                <td th:text="${item.quantity}">2</td>
+                <td th:text="${item.price}">500.00</td>
+                <td th:text="${#numbers.formatDecimal(item.totalPrice, 1, 'COMMA', 2, 'POINT')}">1000.00</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p class="total-amount"><strong>Итого к оплате:</strong> <span th:text="${order.totalAmount}">1000.00</span> ₽</p>
+
+        <a href="/profile" class="btn-back">← Вернуться в профиль</a>
+    </div>
+</div>
+
+<div th:replace="~{layoutFragments/footer :: footer}"></div>
+
+<style>
+    .order-details-container {
+        max-width: 800px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    th, td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #f5f5f5;
+    }
+    .total-amount {
+        margin-top: 20px;
+        font-size: 1.2em;
+        color: #2c7a7b;
+    }
+    .btn-back {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 10px 20px;
+        background-color: #2c7a7b;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+    .btn-back:hover {
+        background-color: #285e61;
+    }
+</style>
+
+</body>
+</html>

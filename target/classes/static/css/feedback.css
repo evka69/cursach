@@ -1,0 +1,112 @@
+/* Основные стили */
+.feedback-content {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px auto;
+    gap: 50px;
+    max-width: 1200px;
+    padding: 0 30px;
+}
+
+.feedback-form-container {
+    flex: 0 1 600px;
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    border: 1px solid #eaeaea;
+}
+
+/* Стили формы */
+.feedback-form .form-group {
+    margin-bottom: 25px;
+}
+
+.feedback-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 15px;
+}
+
+.feedback-form input,
+.feedback-form textarea {
+    width: 95%;
+    padding: 14px 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.feedback-form input:focus,
+.feedback-form textarea:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+    outline: none;
+}
+
+/* Сообщения */
+.feedback-message {
+    margin-top: 20px;
+    padding: 16px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.feedback-message.error {
+    background-color: #fff5f5;
+    color: #c53030;
+    border: 1px solid #fed7d7;
+}
+
+.hidden {
+    display: none;
+}
+
+.feedback-contacts {
+    flex: 1;
+    max-width: 400px;
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    max-height: 140px;
+    background-color: #468966;
+    color:white;
+
+}
+
+.feedback-contacts h3 {
+    margin-bottom: 20px;
+    color: #fff5f5;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.contact-item i {
+    margin-right: 10px;
+    color: #4CAF50;
+    width: 20px;
+    text-align: center;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .feedback-content {
+        flex-direction: column;
+    }
+
+    .feedback-form-container {
+        width: 100%;
+        padding: 25px;
+    }
+}
+
+.good h2{
+    text-align:center;
+}

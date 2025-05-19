@@ -1,0 +1,43 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+     th:fragment="header">
+    <link rel="stylesheet" href="/css/header.css">
+    <header>
+        <header>
+            <div class="header__logotype">
+                <img src="/img/logo.png" alt="" />
+                <a href="/index">GoodFood</a>
+                <div class="header__logotype__line"></div>
+            </div>
+            <div class="header__navigation">
+                <ul>
+                    <li><a href="/catalog">Каталог</a></li>
+                    <li th:if="${authenticated}" >
+                        <a th:if="${#request.isUserInRole('ROLE_USER')}" href="/cart">Корзина</a>
+                    </li>
+                    <li><a href="/contact.html">Контакты</a></li>
+                    <li sec:authorize="isAuthenticated()">
+                        <a th:href="@{/profile}">Профиль</a>
+                    </li>
+                    <li sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/admin/users}" th:if="${#request.isUserInRole('ROLE_ADMIN')}">Пользователи</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="header__buttons">
+                <div class="header__buttons__application">
+                    <a class="cont" th:href="@{/feedback}">Связаться с нами</a>
+                </div>
+                <div class="headerbuttonsenter">
+                    <a th:if="${#request.userPrincipal != null}" th:href="@{/logout}">Выйти</a>
+                    <a th:unless="${#request.userPrincipal != null}" th:href="@{/login}">Войти</a>
+                </div>
+            </div>
+
+            <div class="toggle_btn">
+                <img src="/img/burger.png" alt="">
+            </div>
+        </header>
+    </header>
+
+</div>

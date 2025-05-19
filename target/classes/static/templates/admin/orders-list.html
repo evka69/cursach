@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}"
+      lang="ru">
+<head>
+    <title>Заказы - Админка</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+<div layout:fragment="content" style="margin-bottom: 400px;">
+<h1>Все заказы</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Пользователь</th>
+        <th>Дата</th>
+        <th>Сумма</th>
+        <th>Статус</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}">1</td>
+        <td th:text="${order.user.username}">user</td>
+        <td th:text="${#temporals.format(order.createdAt, 'dd.MM.yyyy HH:mm')}">01.01.2023</td>
+        <td th:text="${order.totalAmount}">1000</td>
+        <td th:text="${order.status}">NEW</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</body>
+</html>

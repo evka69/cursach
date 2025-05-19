@@ -1,0 +1,354 @@
+
+.head2 {
+    display: flex;
+}
+
+.search {
+    display: flex;
+    margin-top: 23px;
+    margin-left: 188px;
+
+}
+
+.search img {
+    width: 98px;
+    height: 86px;
+}
+
+.search .search_poisk {
+    margin-top: 10px;
+    margin-left: 9px;
+    width: 610px;
+    height: 60px;
+    border-radius: 40px;
+    border: 1px solid #468966;
+}
+
+.search .search_poisk .btn_catalog {
+    width: 197px;
+    height: 60px;
+    border-radius: 40px;
+    background-color: #468966;
+    color: white;
+    align-items: center;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 0;
+    padding-bottom: 3px;
+    border: none;
+    cursor: pointer;
+    margin-left: -100px;
+}
+
+.search .search_poisk .btn_catalog:hover {
+    background-color: #fff;
+    color: #468966;
+    border: 1px solid #468966;
+    transition: .3s ease-out;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.295);
+}
+
+.search .search_poisk input {
+    font-size: 24px;
+    line-height: 0;
+    height: 24px;
+    border: none;
+}
+
+input:focus {
+    outline: none;
+    border: none;
+}
+
+.search .search_poisk input :placeholder-shown {
+    margin-left: 50px;
+}
+
+.search_btn {
+    border: none;
+    background-color: #fff;
+    margin-left: -50px;
+    cursor: pointer;
+    width: 25px;
+    height: 27px;
+    margin-top: 30px;
+}
+
+.search_btn img {
+    width: 25px;
+    height: 27px;
+}
+
+.deliver_login {
+    display: flex;
+    margin-left: 50px;
+}
+
+.deliver_login a button {
+    margin-top: 35px;
+    margin-left: 23px;
+    background-color: #E1ECE6;
+    padding-bottom: 4px;
+    line-height: 0;
+    border: none;
+    width: 250px;
+    height: 60px;
+    border-radius: 40px;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 500;
+    color: #404040;
+    cursor: pointer;
+    text-align: center;
+
+}
+
+
+
+.deliver_login a button:hover {
+    background-color: #468966;
+    transition: ease-out .3s;
+    color: white;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.295);
+}
+
+.deliver_login .d1 {
+    margin-top: 35px;
+    margin-left: 30px;
+}
+
+
+.header3 {
+    width: 1920px;
+    height: 468px;
+    background-image: url(/img/backimg.png);
+}
+
+.header3 .good {
+    text-align: center;
+}
+
+.header3 .good h1 {
+    color: #468966;
+    font-size: 48px;
+    font-weight: 500;
+}
+
+.header3 .good .line {
+    width: 599px;
+    height: 5px;
+    background-color: #468966;
+    border: none;
+    margin: 0 auto;
+}
+
+.header3 .good h2 {
+    color: #fff;
+    font-size: 48px;
+    font-weight: 500;
+    line-height: 0;
+    margin-top: 70px;
+    letter-spacing: 5px;
+}
+
+
+
+.dignities ul {
+    list-style-image: url(../img/Ellipse.png);
+    color: #fff;
+    font-size: 24px;
+    display: flex;
+    flex-direction: row;
+    gap: 55px;
+    text-align: center;
+    margin-top: 160px;
+    justify-content: center;
+}
+
+
+.dignities ul li {
+    max-width: 170px;
+    line-height: 1;
+    letter-spacing: 1.5px;
+    text-shadow: 5px 5px 20px rgba(0, 0, 0, 0.295);
+}
+
+/* header end */
+
+
+/* main start */
+
+.conteiner {
+    width: 85%;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.conteiner .title {
+    width: 60%;
+    margin: 107px auto 10px auto;
+    color: #468966;
+    text-align: center;
+}
+
+.conteiner .title h2 {
+    font-size: 25px;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 46px;
+    font-weight: 400;
+    color: #468966;
+}
+
+.conteiner .title p {
+    color: #333;
+    font-size: 20px;
+}
+
+.content .list {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.content .list li {
+    color: #000;
+    margin: 0px 15px;
+    transition: .3s ease-in-out;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 600;
+    position: relative;
+    font-size: 24px;
+    list-style: none;
+}
+
+.content .list li::after {
+    content: "";
+    position: absolute;
+    bottom: -3px;
+    width: 0%;
+    height: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #468966;
+    transition: .4s ease-in-out;
+}
+
+.content .list li:hover::after {
+    width: 100%;
+}
+
+.content .list li:first-child {
+    color: #468966;
+}
+
+.box_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px 75px;
+    gap: 5px;
+}
+
+.box {
+    width: 32%;
+    background: #FFF;
+    border-radius: 3px;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    animation: movement 1s ease-in-out;
+}
+
+.box .box_img {
+    width: 35%;
+    text-align: center;
+}
+
+.box_img img {
+    width: 130px;
+    height: 130px;
+}
+
+.box .text {
+    text-align: left;
+    width: 60%;
+}
+
+.text h3 {
+    text-transform: capitalize;
+}
+
+.text hr {
+    width: 50px;
+    background: #468966;
+    height: 3px;
+    margin: 5px 0px 10px 0px;
+}
+
+.text section {
+    font-weight: 600;
+    font-family: 'Inter';
+    margin-bottom: -5px;
+}
+
+.text .stars {
+    margin-bottom: -2px;
+}
+
+.text .stars i {
+    font-size: 13px;
+    color: #468966;
+}
+
+.text article {
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+.box a {
+    text-decoration: none;
+    color: black;
+}
+
+.box a:hover {
+    color: #468966;
+    transition: .5s ease;
+}
+
+
+
+
+.catalog_btn {
+    margin-left: 1200px;
+}
+
+.catalog_btn .btn_catalog button {
+    width: 207px;
+    height: 53px;
+    border: none;
+    background-color: #468966;
+    border-radius: 10px;
+    color: #FFF;
+    cursor: pointer;
+    font-size: 24px;
+    line-height: 0;
+    padding-bottom: 2px;
+    margin-top: 10px;
+    margin-bottom:20px;
+    margin-left: 422px;
+
+}
+
+.catalog_btn .btn_catalog button:hover {
+    background-color: #FFF;
+    color: #468966;
+    border: 1px solid #468966;
+    transition: .3s ease-out;
+    width: auto;
+}

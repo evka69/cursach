@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}"
+      lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Все категории</title>
+    <link rel="stylesheet" href="/css/view-all-categories.css">
+</head>
+<body>
+<div layout:fragment="content" class="">
+    <main>
+        <div class="main__categories__block">
+            <div class="main__categories__block__header">
+                <h1>Все категории</h1>
+                <a href="add-category">
+                    Добавить категорию
+                </a>
+            </div>
+
+            <div class="main__categories__block__content">
+                <!-- Категория разработка -->
+                <div class="category-block" id="develop">
+                    <div class="category-header">
+                        <h2>Разработка</h2>
+                        <button class="delete-category-btn" data-category-id="develop">Удалить категорию</button>
+                    </div>
+                    <div class="category-cards">
+                        <!-- Программист Python -->
+                        <div class="card">
+                            <div class="card-image" style="background-image: url(./img/Python.jpg)"></div>
+                            <div class="card-content">
+                                <h4>Программист Python</h4>
+                                <p>Разработка серверной части веб-приложений, API, алгоритмов машинного обучения</p>
+                                <div class="card-footer">
+                                    <p class="salary">от 20 000 ₽</p>
+                                    <div class="action-buttons">
+                                        <button class="edit-btn">Редактировать</button>
+                                        <button class="delete-btn">Удалить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-image" style="background-image: url(./img/Python.jpg)"></div>
+                            <div class="card-content">
+                                <h4>Программист Python</h4>
+                                <p>Разработка серверной части веб-приложений, API, алгоритмов машинного обучения</p>
+                                <div class="card-footer">
+                                    <p class="salary">от 20 000 ₽</p>
+                                    <div class="action-buttons">
+                                        <button class="edit-btn">Редактировать</button>
+                                        <button class="delete-btn">Удалить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-image" style="background-image: url(./img/Python.jpg)"></div>
+                            <div class="card-content">
+                                <h4>Программист Python</h4>
+                                <p>Разработка серверной части веб-приложений, API, алгоритмов машинного обучения</p>
+                                <div class="card-footer">
+                                    <p class="salary">от 20 000 ₽</p>
+                                    <div class="action-buttons">
+                                        <button class="edit-btn">Редактировать</button>
+                                        <button class="delete-btn">Удалить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Остальные карточки -->
+                    </div>
+                </div>
+
+                <!-- Остальные категории -->
+                <div class="category-block" id="design">
+                    <div class="category-header">
+                        <h2>Дизайн и UI/UX</h2>
+                        <button class="delete-category-btn" data-category-id="design">Удалить категорию</button>
+                    </div>
+                    <!-- Карточки -->
+                </div>
+
+                <div class="category-block" id="safety">
+                    <div class="category-header">
+                        <h2>Инфраструктура и безопасность</h2>
+                        <button class="delete-category-btn" data-category-id="safety">Удалить категорию</button>
+                    </div>
+                    <!-- Карточки -->
+                </div>
+
+                <div th:each="category : ${categories}" class="category-block" th:id="${category.id}">
+                    <div class="category-header">
+                        <h2 th:text="${category.title}"></h2>
+                        <button class="delete-category-btn" th:data-category-id="${category.id}">Удалить категорию</button>
+                    </div>
+                    <div class="category-cards">
+                        <!-- Здесь могут быть карточки для каждой категории -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script th:inline="javascript">
+        // Ждем полной загрузки DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            // Находим контейнер с категориями
+            const categoriesContainer = document.querySelector('.main__categories__block__content');
+
+            // Проверяем, что элемент существует
+            if (!categoriesContainer) {
+                console.error('Элемент .main__categories__block__content не найден');
+                return;
+            }
+
+            // Обработчик кликов
+            categoriesContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('delete-category-btn')) {
+                    const categoryId = e.target.getAttribute('data-category-id');
+
+                    if (confirm('Вы уверены, что хотите удалить эту категорию?')) {
+                        fetch(`/categories/${categoryId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]')?.content || ''
+                            },
+                            credentials: 'include'
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Ошибка сервера: ' + response.status);
+                            }
+                            return response;
+                        })
+                        .then(() => {
+                            // Удаляем категорию из DOM
+                            const categoryBlock = e.target.closest('.category-block');
+                            if (categoryBlock) {
+                                categoryBlock.remove();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Ошибка при удалении категории: ' + error.message);
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

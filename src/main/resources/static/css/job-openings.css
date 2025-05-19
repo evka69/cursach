@@ -1,0 +1,175 @@
+.main__search__block {
+}
+
+.main__search__block .main__search__block__form {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 30px;
+    width: 490px;
+    background-color: #ce96f9;
+    border-radius: 10px;
+    padding: 16px 26px;
+    transition: all 1s;
+}
+
+.main__search__block .main__search__block__form h3 {
+    font-size: 30px;
+    margin: 0;
+}
+
+.main__search__block .main__search__block__form .main__search__block__form__bottom {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 26px;
+}
+
+.main__search__block .main__search__block__form .main__search__block__form__bottom .box select {
+    width: 102px;
+    padding: 7px 12px;
+    background-color: white;
+    border: none;
+    color: #727272;
+}
+
+.main__search__block .main__search__block__form .main__search__block__form__bottom .main__search__block__form__bottom__input {
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    width: 310px;
+    justify-content: space-between;
+    background-color: white;
+    overflow: hidden;
+    border-radius: 100px;
+}
+
+.main__search__block .main__search__block__form .main__search__block__form__bottom .main__search__block__form__bottom__input input {
+    border: none;
+    margin-left: 10px;
+}
+
+.main__search__block .main__search__block__form .main__search__block__form__bottom .main__search__block__form__bottom__input input:focus {
+    outline: none;
+    border: none;
+}
+
+.main__search__block .main__search__block__form .main__search__block__form__bottom .main__search__block__form__bottom__input button {
+    background-color: #fff93b;
+    border: none;
+    width: 53px;
+    padding: 9px 11px;
+    font-size: 13px;
+}
+
+.main__search__block .main__search__block__form .main__search__block__form__bottom .main__search__block__form__bottom__input button:hover {
+    cursor: pointer;
+}
+
+.main__search__block .main__search__block__form:hover {
+    box-shadow: 5px 7px 30px #ce96f9;
+}
+
+.main__search__block .main__search__block__form img {
+    position: absolute;
+    left: 600px;
+    border-radius: 100px;
+    top: -30px;
+    height: 190px;
+}
+
+.main__search__block .main__search__block__develop {
+    margin: 0 auto;
+}
+
+.main__search__block .main__search__block__develop h2 {
+    font-size: 32px;
+}
+
+.main__search__block .main__search__block__develop__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main__search__block .main__search__block__develop__cards .main__search__block__develop__cards__row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.main__search__block .main__search__block__develop__cards .main__search__block__develop__cards__row .main__search__block__develop__cards__row__card {
+    width: 332px;
+    height: 190px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    padding: 0;
+    border-radius: 20px 20px 20px 0px;
+}
+
+.main__search__block .main__search__block__develop__cards .main__search__block__develop__cards__row .main__search__block__develop__cards__row__card .develop__cards__row__card__name {
+    color: black;
+    font-weight: 600;
+    font-size: 17px;
+    background-color: rgb(255, 255, 255);
+    padding: 2px;
+    width: 179px;
+    border-radius: 0px 0px 5px 0px;
+    margin: 0;
+}
+
+.main__search__block .main__search__block__develop__cards .main__search__block__develop__cards__row .main__search__block__develop__cards__row__card .develop__cards__row__card__right {
+    background-color: rgba(0, 0, 0, 0.473);
+    margin-top: -40px;
+    margin-left: 57%;
+    padding: 10px 8px;
+    width: 143px;
+    height: 100%;
+    transition: all 2s;
+}
+
+.main__search__block .main__search__block__develop__cards .main__search__block__develop__cards__row .main__search__block__develop__cards__row__card .develop__cards__row__card__right p {
+    color: white;
+    font-size: 12px;
+    width: 123px;
+    height: 87px;
+    line-height: 12px;
+}
+
+.main__search__block .main__search__block__develop__cards .main__search__block__develop__cards__row .main__search__block__develop__cards__row__card .develop__cards__row__card__right .p__second {
+    height: 12px;
+}
+
+.main__search__block .main__search__block__develop__cards .main__search__block__develop__cards__row .main__search__block__develop__cards__row__card .develop__cards__row__card__right button {
+    font-weight: 400;
+    background-color: #fff93b;
+    border-radius: 5px;
+    border: none;
+    padding: 6px 7px;
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.main__search__block .main__search__block__develop__cards .main__search__block__develop__cards__row .main__search__block__develop__cards__row__card .develop__cards__row__card__right:hover button {
+    opacity: 1;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+.main__search__block .main__search__block__design {
+    margin: 0 auto;
+}
+
+.main__search__block .main__search__block__design h2 {
+    font-size: 32px;
+}
+
+.main__search__block .main__search__block__safety {
+    margin: 0 auto;
+}
+
+.main__search__block .main__search__block__safety h2 {
+    font-size: 32px;
+}
+

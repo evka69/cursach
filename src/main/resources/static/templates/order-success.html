@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Заказ оформлен</title>
+    <link rel="stylesheet" href="/css/order-success.css">
+</head>
+<body>
+<div layout:fragment="content" class="order-success-container">
+    <div class="success-card">
+        <div class="success-icon">✓</div>
+        <h1>Спасибо за ваш заказ!</h1>
+        <p class="order-number">Номер вашего заказа: <span th:text="${order.id}"></span></p>
+        <p>Мы отправили подтверждение на email: <strong th:text="${order.email}"></strong></p>
+
+        <div class="order-summary">
+            <h3>Детали заказа:</h3>
+            <p><strong>Способ оплаты:</strong> <span th:text="${order.paymentMethod == 'CASH' ? 'Наличными при получении' : 'Картой онлайн'}"></span></p>
+            <p><strong>Адрес доставки:</strong> <span th:text="${order.deliveryAddress}"></span></p>
+            <p th:if="${order.comment}"><strong>Комментарий:</strong> <span th:text="${order.comment}"></span></p>
+        </div>
+
+        <div class="action-buttons">
+            <a href="/index" class="btn btn-primary">На главную</a>
+            <a href="/catalog" class="btn btn-outline">Продолжить покупки</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

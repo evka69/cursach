@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Оформление заказа</title>
+    <link rel="stylesheet" href="/css/checkout.css">
+</head>
+<body>
+<div layout:fragment="content" class="checkout-container">
+    <div class="checkout-card">
+        <h1 class="checkout-title">Оформление заказа</h1>
+
+        <form th:action="@{/create-order}" method="post" th:object="${orderDto}" class="checkout-form">
+            <div class="address-section">
+                <h3 class="section-title">Адрес доставки</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Город</label>
+                        <input type="text" th:field="*{city}" class="form-input"
+                               th:value="${user.city}" placeholder="Москва" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Улица</label>
+                        <input type="text" th:field="*{street}" class="form-input"
+                               th:value="${user.street}" placeholder="Ленина" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Дом</label>
+                        <input type="text" th:field="*{house}" class="form-input"
+                               th:value="${user.house}" placeholder="10" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Квартира</label>
+                        <input type="text" th:field="*{apartment}" class="form-input"
+                               th:value="${user.apartment}" placeholder="25">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" th:field="*{email}" class="form-input"
+                       th:value="${user.email}" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Способ оплаты</label>
+                <select th:field="*{paymentMethod}" class="form-select" required>
+                    <option value="">Выберите способ оплаты</option>
+                    <option value="CASH">Наличными при получении</option>
+                    <option value="CARD">Картой онлайн</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Комментарий к заказу</label>
+                <textarea th:field="*{comment}" class="form-textarea"
+                          placeholder="Укажите дополнительные пожелания по доставке"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <a href="/cart" class="btn btn-secondary">Назад в корзину</a>
+                <input type="hidden" th:each="item : *{items}"
+                       th:name="items[__${itemStat.index}__].productId"
+                       th:value="${item.productId}">
+                <input type="hidden" th:each="item : *{items}"
+                       th:name="items[__${itemStat.index}__].quantity"
+                       th:value="${item.quantity}">
+                <button type="submit" class="btn btn-primary">Подтвердить заказ</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

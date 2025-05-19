@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}"
+      lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Обратная связь</title>
+    <link rel="stylesheet" href="/css/feedback.css">
+    <script src= /js/feedback.js></script>
+</head>
+<body>
+<div layout:fragment="content" class="conteiner">
+    <div class="header3">
+        <div class="good">
+            <h1>ОБРАТНАЯ СВЯЗЬ</h1>
+            <div class="line"></div>
+            <h2>Мы всегда рады вашим вопросам и предложениям</h2>
+        </div>
+    </div>
+
+    <div class="feedback-content">
+        <!-- Форма обратной связи -->
+        <div id="feedbackFormContainer" class="feedback-form-container">
+            <form id="feedbackForm" class="feedback-form">
+                <div class="form-group">
+                    <label for="name">Ваше имя:</label>
+                    <input type="text" id="name" name="name" required
+                           placeholder="Иван Иванов">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Ваш email:</label>
+                    <input type="email" id="email" name="email" required
+                           placeholder="example@mail.ru">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Ваш телефон:</label>
+                    <input type="tel" id="phone" name="phone"
+                           placeholder="+7 (999) 123-45-67">
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Ваше сообщение:</label>
+                    <textarea id="message" name="message" rows="5" required
+                              placeholder="Напишите ваш вопрос или предложение..."></textarea>
+                </div>
+
+                <div class="form-submit">
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i> Отправить
+                    </button>
+                </div>
+            </form>
+
+            <!-- Блок для ошибок -->
+            <div id="feedbackMessage" class="feedback-message hidden"></div>
+        </div>
+
+        <!-- Блок успешной отправки (изначально скрыт) -->
+        <div id="successMessage" class="success-message hidden">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Спасибо за ваше сообщение!</h3>
+            <p>Мы рассмотрим ваше обращение в ближайшее время.</p>
+            <a href="/index" class="btn-home">
+                <i class="fas fa-home"></i> Вернуться на главную
+            </a>
+        </div>
+
+        <!-- Блок контактов -->
+            <div class="feedback-contacts">
+            <h3><i class="fas fa-info-circle"></i> Контакты</h3>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>blinn2006@mail.ru</span>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <span>8 (800) 123-45-67</span>
+            </div>
+        </div>
+    </div>
+    <script src= /js/feedback.js></script>
+</div>
+
+
+</body>
+</html>

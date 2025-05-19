@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог продуктов</title>
+    <link rel="stylesheet" href="/css/catalog.css">
+</head>
+<body>
+<div layout:fragment="content" class="">
+    <div class="head2">
+        <div class="search">
+            <img src="/img/logo.png" alt="">
+            <div class="search_poisk">
+                <a href="catalog"><button class="btn_catalog">Каталог</button></a>
+                <form th:action="@{/catalog}" method="get" class="search-form">
+                    <input type="text" name="search" placeholder="Поиск" th:value="${searchQuery}">
+                    <button type="submit" class="search_btn">
+                        <svg class="search-icon" viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 0 0 1.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 0 0-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 0 0 5.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="deliver_login">
+            <a href="">
+                <button>Доставка</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="conteiner">
+        <div class="title">
+            <h2>Каталог</h2>
+        </div>
+        <div class="content">
+            <div class="list">
+                <a th:href="@{/catalog(search=${searchQuery})}"
+                   th:classappend="${#request.getParameter('category') == null} ? 'filter-btn active' : 'filter-btn'">
+                    Все продукты
+                </a>
+                <a th:href="@{/catalog(category='Фрукты', search=${searchQuery})}"
+                   th:classappend="${#request.getParameter('category') == 'Фрукты'} ? 'filter-btn active' : 'filter-btn'">
+                    Фрукты
+                </a>
+                <a th:href="@{/catalog(category='Овощи', search=${searchQuery})}"
+                   th:classappend="${#request.getParameter('category') == 'Овощи'} ? 'filter-btn active' : 'filter-btn'">
+                    Овощи
+                </a>
+                <a th:href="@{/catalog(category='Молочные', search=${searchQuery})}"
+                   th:classappend="${#request.getParameter('category') == 'Молочные'} ? 'filter-btn active' : 'filter-btn'">
+                    Молочные
+                </a>
+                <a th:href="@{/catalog(category='Замороженные', search=${searchQuery})}"
+                   th:classappend="${#request.getParameter('category') == 'Замороженные'} ? 'filter-btn active' : 'filter-btn'">
+                    Замороженные
+                </a>
+                <a th:href="@{/catalog(category='К чаю', search=${searchQuery})}"
+                   th:classappend="${#request.getParameter('category') == 'К чаю'} ? 'filter-btn active' : 'filter-btn'">
+                    К чаю
+                </a>
+            </div>
+
+            <form th:action="@{/cart/add}" method="post">
+                <div class="grid-container">
+                    <div th:each="product : ${products}" class="box" th:attr="data-category=${product.category}">
+                        <div class="box_img">
+                            <img th:if="${product.imagePath != null}" th:src="@{${product.imagePath}}" th:alt="${product.name}">
+                            <img th:unless="${product.imagePath != null}" src="/img/default.png" th:alt="${product.name}">
+                        </div>
+                        <div class="text">
+                            <h3><a th:href="@{'/edit-product/' + ${product.id}}" th:text="${product.name}"></a></h3>
+                            <div th:if="${#request.isUserInRole('ROLE_USER')}" class="check">
+
+                                <input type="checkbox" th:id="'product' + ${product.id}" class="product-checkbox"
+                                       th:name="'selectedProducts'" th:value="${product.id}"
+                                       th:checked="${selectedProducts != null and selectedProducts.contains(product.id)}"/>
+                                <label th:for="'product' + ${product.id}" class="checkmark"></label>
+                            </div>
+                            <hr>
+                            <section th:text="'от ' + ${#numbers.formatDecimal(product.price, 1, 2, 'COMMA')} + '₽'"></section>
+                            <article th:text="'Категория: ' + ${product.category}"></article>
+                            <div th:if="${#request.isUserInRole('ROLE_ADMIN')}" class="actions">
+                                <a th:href="@{'/edit-product/' + ${product.id}}" class="edit-btn">Редактировать</a>
+                                <form th:action="@{'/delete-product/' + ${product.id}}" method="post" style="display: inline;">
+                                    <button type="submit" class="delete-btn" style="height: 32px">Удалить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div th:if="${#request.isUserInRole('ROLE_USER')}">
+                    <button type="submit" class="btn_catalog" style="width: 200px">Добавить в корзину</button>
+                </div>
+            </form>
+            <div class="catalog_btn">
+                <div th:if="${#request.isUserInRole('ROLE_ADMIN')}">
+                    <a th:href="@{/add-product}" class="btn_add">
+                        <button>Добавить продукт</button>
+                    </a>
+                </div>
+            </div>
+            <!-- После закрывающего тега form и перед закрывающим div.content -->
+            <div th:if="${totalPages > 1}" class="pagination">
+                <a th:if="${currentPage > 1}"
+                   th:href="@{/catalog(category=${#request.getParameter('category')},
+                          search=${searchQuery},
+                          page=${currentPage - 1},
+                          size=${pageSize})}">
+                    &laquo; Назад
+                </a>
+
+                <a th:each="i : ${#numbers.sequence(1, totalPages)}"
+                   th:href="@{/catalog(category=${#request.getParameter('category')},
+                          search=${searchQuery},
+                          page=${i},
+                          size=${pageSize})}"
+                   th:text="${i}"
+                   th:classappend="${i == currentPage} ? 'active' : ''">
+                </a>
+
+                <a th:if="${currentPage < totalPages}"
+                   th:href="@{/catalog(category=${#request.getParameter('category')},
+                          search=${searchQuery},
+                          page=${currentPage + 1},
+                          size=${pageSize})}">
+                    Вперёд &raquo;
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

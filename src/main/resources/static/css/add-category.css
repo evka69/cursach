@@ -1,0 +1,138 @@
+/* Основные стили */
+main {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.form-group label {
+    flex: 1;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0;
+}
+
+.form-group input, .form-group textarea {
+    flex: 2;
+    padding: 12px;
+    border: 2px solid #dee2e6;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: #dee2e6;
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 105, 180, 0.5);
+}
+
+/* Стили для кнопки */
+button[type="submit"] {
+    width: 100%;
+    padding: 14px 20px;
+    background: linear-gradient(135deg, #7A288A 0%, #5C1A7D 100%);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #5C1A7D 0%, #7A288A 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"]:active {
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+/* Стили для сообщений */
+.message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.message.error {
+    background: #f8d7da;
+    color: #c82333;
+}
+
+.message.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    main {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .form-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .form-group label {
+        flex: 0;
+        margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group textarea {
+        flex: 1;
+        padding: 10px;
+    }
+
+    button[type="submit"] {
+        padding: 12px;
+    }
+}
+
+/* Анимация ошибок */
+.error-input {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+}
+
+.category-block {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: appear 0.5s ease forwards;
+}
+
+@keyframes appear {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+

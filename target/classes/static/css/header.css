@@ -1,0 +1,93 @@
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.header__logotype {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.header__logotype a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+}
+
+.header__logotype img {
+    width: 76px;
+    height: 66px;
+}
+
+.header__logotype__line {
+    width: 2px;
+    height: 50px;
+    background-color: #468966;
+    border-radius: 20px;
+}
+
+.header__navigation {
+    margin-left: 99px;
+}
+
+.header__navigation ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 22px;
+    list-style: none;
+}
+
+.header__navigation ul a {
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    color: black;
+    transition: all 0.3s;
+}
+
+.header__navigation ul a:hover {
+    color: #a644f2;
+}
+
+.header__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 17px;
+    margin-left: 99px;
+}
+
+.header__buttons__application {
+    background-color: #d9d9d9;
+    border-radius: 5px;
+}
+
+.cont {
+    text-decoration:none;
+    color:#468966;
+}
+
+.headerbuttonsenter a {
+    text-decoration:none;
+    color:#468966;
+}
+
+.header__buttons__enter .logg {
+    width: 120px;
+    height: 30px;
+    border: 1px solid #468966;
+    color: #468966;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: .3s ease-out;
+}
+
+.header__buttons__enter .logg:hover {
+    background: #468966;
+    color: #fff;
+}
