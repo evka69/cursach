@@ -18,7 +18,6 @@ public class Product {
     @Transient
     private MultipartFile imageFile;
 
-    // Добавьте геттер и сеттер для imageFile
     public MultipartFile getImageFile() {
         return imageFile;
     }
@@ -48,17 +47,27 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems = new ArrayList<>();
 
-    @Column(name = "stock", nullable = false, columnDefinition = "integer default 0")
-    private Integer stock = 0;
+    @Column(name = "stock", nullable = false, columnDefinition = "integer default 10")
+    private Integer stock = 10;
+
+    @Column(name = "max_stock", nullable = false, columnDefinition = "integer default 10")
+    private Integer maxStock = 10;
 
     // Геттеры и сеттеры
-
     public Integer getStock() {
         return stock;
     }
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public Integer getMaxStock() {
+        return maxStock;
+    }
+
+    public void setMaxStock(Integer maxStock) {
+        this.maxStock = maxStock;
     }
     public Long getId() {
         return id;

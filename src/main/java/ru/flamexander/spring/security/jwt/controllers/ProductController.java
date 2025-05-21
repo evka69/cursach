@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.flamexander.spring.security.jwt.entities.Product;
 import ru.flamexander.spring.security.jwt.repositories.CartItemRepository;
 import ru.flamexander.spring.security.jwt.repositories.ProductRepository;
+import ru.flamexander.spring.security.jwt.service.ProductService;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -26,14 +27,16 @@ public class ProductController {
 
     private final ProductRepository productRepository;
     private final CartItemRepository cartItemRepository;
+    private final ProductService productService;
 
     @Value("${upload.path}")
     private String uploadPath;
 
     public ProductController(ProductRepository productRepository,
-                             CartItemRepository cartItemRepository) {
+                             CartItemRepository cartItemRepository, ProductService productService) {
         this.productRepository = productRepository;
         this.cartItemRepository = cartItemRepository;
+        this.productService = productService;
     }
 
     @GetMapping("/api/catalog")
@@ -43,6 +46,7 @@ public class ProductController {
                                      @RequestParam(defaultValue = "9") int size,
                                      Model model) {
 
+        productService.clearProductCache();
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<Product> productPage;
 
@@ -78,6 +82,9 @@ public class ProductController {
                 String imagePath = saveUploadedFile(file);
                 product.setImagePath(imagePath);
             }
+
+            product.setStock(10);
+            product.setMaxStock(10);
 
             productRepository.save(product);
             redirectAttributes.addFlashAttribute("success", "Продукт успешно добавлен!");

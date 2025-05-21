@@ -69,7 +69,7 @@ public class UserProfileMvcController {
 
         try {
             User updatedUser = userService.updateCurrentUserProfile(username, updateDto);
-            return "redirect:/profile"; // после успешного обновления — возвращаемся к просмотру
+            return "redirect:/login"; // после успешного обновления — возвращаемся ко входу
         } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("userProfileUpdateDto", updateDto);

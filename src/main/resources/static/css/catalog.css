@@ -450,3 +450,39 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+
+/* Стили для отображения доступности */
+.availability {
+    font-size: 14px;
+    color: #468966;
+    margin: 5px 0;
+    font-weight: 500;
+}
+
+.availability.low-stock {
+    color: #ff9800;
+}
+
+.availability.out-of-stock {
+    color: #f44336;
+    font-weight: bold;
+}
+
+/* Стиль для недоступных товаров */
+.box.out-of-stock {
+    opacity: 0.7;
+    position: relative;
+}
+
+.box.out-of-stock::after {
+    content: "Нет в наличии";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(244, 67, 54, 0.9);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
