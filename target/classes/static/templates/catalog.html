@@ -73,6 +73,10 @@
                         </div>
                         <div class="text">
                             <h3><a th:href="@{'/edit-product/' + ${product.id}}" th:text="${product.name}"></a></h3>
+                            <div class="availability"
+                                 th:classappend="${product.stock == 0} ? 'out-of-stock' : (${product.stock < 5} ? 'low-stock' : '')">
+                                <span th:text="'Доступно: ' + ${product.stock} + ' из ' + ${product.maxStock}"></span>
+                            </div>
                             <div th:if="${#request.isUserInRole('ROLE_USER')}" class="check">
 
                                 <input type="checkbox" th:id="'product' + ${product.id}" class="product-checkbox"

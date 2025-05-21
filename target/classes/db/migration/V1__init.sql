@@ -3,21 +3,37 @@ insert into roles (name)
 values
 ('ROLE_USER')
 
-INSERT INTO products (name, price, category, image_path) VALUES
-('Бананы', 8900, 'Фрукты', '/catalog_img/banana.jpg'),
-('Ананасы', 8148, 'Фрукты', '/catalog_img/ananas.jpg'),
-('Свекла', 25922, 'Овощи', '/catalog_img/svekkla.jpg'),
-('Лук', 17500, 'Овощи', '/catalog_img/luk.jpg'),
-('Чеснок', 575980, 'Овощи', '/catalog_img/garlic.jpg'),
-('Молоко', 41453, 'Молочные', '/catalog_img/milk.jpg'),
-('Йогурт', 40620, 'Молочные', '/catalog_img/yogurt.jpg'),
-('Творог', 7990, 'Молочные', '/catalog_img/tvorog.jpg'),
-('Печенье', 21650, 'К чаю', '/catalog_img/pechenki.jpg'),
-('Пирожное', 3200, 'К чаю', '/catalog_img/pir.jpg'),
-('Торт', 30758, 'К чаю', '/catalog_img/cake.jpg'),
-('Пельмени', 9226, 'Замороженные', '/catalog_img/pelmen.jpg'),
-('Оладьи', 14290, 'Замороженные', '/catalog_img/oladyi.jpg'),
-('Овощной микс', 273060, 'Замороженные', '/catalog_img/veget.jpg');
+
+ALTER TABLE products ADD COLUMN max_stock INTEGER DEFAULT 10 NOT NULL;
+ALTER TABLE products ADD COLUMN stock INTEGER DEFAULT 10 NOT NULL;
+
+INSERT INTO products (name, price, category, image_path, stock, max_stock) VALUES
+('Бананы', 89.00, 'Фрукты', '/catalog_img/banana.jpg', 10, 10),
+('Ананасы', 81.48, 'Фрукты', '/catalog_img/ananas.jpg', 10, 10),
+('Свекла', 259.22, 'Овощи', '/catalog_img/svekkla.jpg', 10, 10),
+('Лук', 175.00, 'Овощи', '/catalog_img/luk.jpg', 10, 10),
+('Чеснок', 5759.80, 'Овощи', '/catalog_img/garlic.jpg', 10, 10),
+('Молоко', 414.53, 'Молочные', '/catalog_img/milk.jpg', 10, 10),
+('Йогурт', 406.20, 'Молочные', '/catalog_img/yogurt.jpg', 10, 10),
+('Творог', 79.90, 'Молочные', '/catalog_img/tvorog.jpg', 10, 10),
+('Печенье', 216.50, 'К чаю', '/catalog_img/pechenki.jpg', 10, 10),
+('Пирожное', 32.00, 'К чаю', '/catalog_img/pir.jpg', 10, 10),
+('Торт', 307.58, 'К чаю', '/catalog_img/cake.jpg', 10, 10),
+('Пельмени', 92.26, 'Замороженные', '/catalog_img/pelmen.jpg', 10, 10),
+('Оладьи', 142.90, 'Замороженные', '/catalog_img/oladyi.jpg', 10, 10),
+('Овощной микс', 2730.60, 'Замороженные', '/catalog_img/veget.jpg', 10, 10);
 
 
-select * from "public".users;
+select * from "public".roles;
+
+
+
+
+START TRANSACTION;
+INSERT INTO roles (name) VALUES ('ROLE_USER');
+SELECT * FROM roles WHERE name = 'ROLE_USER';
+COMMIT;
+
+SELECT id, name, stock, max_stock FROM products;
+
+UPDATE products SET stock = 10;
