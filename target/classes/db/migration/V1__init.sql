@@ -8,7 +8,6 @@ ALTER TABLE products ADD COLUMN max_stock INTEGER DEFAULT 10 NOT NULL;
 ALTER TABLE products ADD COLUMN stock INTEGER DEFAULT 10 NOT NULL;
 
 INSERT INTO products (name, price, category, image_path, stock, max_stock) VALUES
-('Бананы', 89.00, 'Фрукты', '/catalog_img/banana.jpg', 10, 10),
 ('Ананасы', 81.48, 'Фрукты', '/catalog_img/ananas.jpg', 10, 10),
 ('Свекла', 259.22, 'Овощи', '/catalog_img/svekkla.jpg', 10, 10),
 ('Лук', 175.00, 'Овощи', '/catalog_img/luk.jpg', 10, 10),
