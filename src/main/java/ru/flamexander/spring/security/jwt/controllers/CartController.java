@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.flamexander.spring.security.jwt.entities.Cart;
 import ru.flamexander.spring.security.jwt.entities.CartItem;
 import ru.flamexander.spring.security.jwt.entities.User;
@@ -61,15 +62,17 @@ public class CartController {
     }
 
     @GetMapping("/cart/edit/{id}")
-    public String editItemInCart(@PathVariable Long id, @RequestParam(required = false) Integer quantity, Principal principal) {
-        User user = userService.findByUsername(principal.getName()).orElse(null);
-        if (user != null) {
-            if (quantity != null) {
+    public String editItemInCart(@PathVariable Long id,
+                                 @RequestParam(required = false) Integer quantity,
+                                 Principal principal,
+                                 RedirectAttributes redirectAttributes) { // Добавляем RedirectAttributes
+        try {
+            User user = userService.findByUsername(principal.getName()).orElse(null);
+            if (user != null && quantity != null) {
                 cartService.editItemInCart(user, id, quantity);
-            } else {
-                // Обработка случая, когда quantity не передан
-                return "redirect:/cart";
             }
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/cart";
     }
