@@ -124,7 +124,7 @@ public class OrderService {
     }
 
     private String getPaymentMethodName(String method) {
-        return method.equals("CASH") ? "Наличными при получении" : "Картой онлайн";
+        return method.equals("CASH") ? "Наличными при получении" : "Картой при получении";
     }
 
     @Transactional(readOnly = true)

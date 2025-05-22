@@ -106,6 +106,9 @@ public class CartService {
         if (quantity <= 0) {
             throw new IllegalArgumentException("Quantity must be positive");
         }
+        if (quantity > 10) { // Проверяем лимит
+            throw new IllegalStateException("Максимальное количество товара в корзине - 10 шт.");
+        }
 
         Cart cart = getCartForUser(user);
         Product product = productRepository.findById(productId)
