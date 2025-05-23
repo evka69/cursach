@@ -13,6 +13,7 @@ import ru.flamexander.spring.security.jwt.entities.Product;
 import ru.flamexander.spring.security.jwt.repositories.CartItemRepository;
 import ru.flamexander.spring.security.jwt.repositories.ProductRepository;
 import ru.flamexander.spring.security.jwt.service.ProductService;
+import ru.flamexander.spring.security.jwt.service.ProductUpdateService;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -28,15 +29,17 @@ public class ProductController {
     private final ProductRepository productRepository;
     private final CartItemRepository cartItemRepository;
     private final ProductService productService;
+    private final ProductUpdateService productUpdateService;
 
     @Value("${upload.path}")
     private String uploadPath;
 
     public ProductController(ProductRepository productRepository,
-                             CartItemRepository cartItemRepository, ProductService productService) {
+                             CartItemRepository cartItemRepository, ProductService productService, ProductUpdateService productUpdateService) {
         this.productRepository = productRepository;
         this.cartItemRepository = cartItemRepository;
         this.productService = productService;
+        this.productUpdateService = productUpdateService;
     }
 
     @GetMapping("/api/catalog")
@@ -108,15 +111,23 @@ public class ProductController {
     public String updateProduct(@PathVariable Long id,
                                 @ModelAttribute Product product,
                                 @RequestParam(value = "image", required = false) MultipartFile file,
+                                @RequestParam(value = "stock", required = false) Integer stock,
                                 RedirectAttributes redirectAttributes) {
         try {
             Product existingProduct = productRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("Invalid product Id:" + id));
 
+            // Обновляем основные данные
             existingProduct.setName(product.getName());
             existingProduct.setPrice(product.getPrice());
             existingProduct.setCategory(product.getCategory());
 
+            // Обновляем количество, если передано
+            if (stock != null) {
+                existingProduct.setStock(stock);
+            }
+
+            // Обработка изображения
             if (file != null && !file.isEmpty()) {
                 if (existingProduct.getImagePath() != null) {
                     deleteImageFile(existingProduct.getImagePath());
@@ -125,7 +136,11 @@ public class ProductController {
                 existingProduct.setImagePath(imagePath);
             }
 
-            productRepository.save(existingProduct);
+            Product updatedProduct = productRepository.save(existingProduct);
+
+            // Отправляем обновление через WebSocket
+            productUpdateService.sendProductUpdate(updatedProduct);
+
             redirectAttributes.addFlashAttribute("success", "Товар успешно обновлен");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Ошибка при обновлении товара: " + e.getMessage());

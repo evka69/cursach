@@ -35,16 +35,9 @@ public class CartController {
     public String viewCart(Model model, Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElse(null);
         if (user != null) {
-            Cart cart = cartService.getCartForUser(user);
-            if (cart != null) {
-                List<CartItem> items = cartService.getCartItems(cart);
-                model.addAttribute("cartItems", items);
-                BigDecimal total = calculateTotal(items);
-                model.addAttribute("total", total);
-            } else {
-                model.addAttribute("cartItems", new ArrayList<>());
-                model.addAttribute("total", BigDecimal.ZERO);
-            }
+            List<CartItem> items = cartService.getCartItemsForUser(user);
+            model.addAttribute("cartItems", items);
+            model.addAttribute("total", calculateTotal(items));
         } else {
             model.addAttribute("cartItems", new ArrayList<>());
             model.addAttribute("total", BigDecimal.ZERO);
@@ -52,11 +45,12 @@ public class CartController {
         return "cart";
     }
 
-    @GetMapping("/cart/remove/{id}")
-    public String removeItemFromCart(@PathVariable Long id, Principal principal) {
+    @PostMapping("/cart/remove/{productId}")
+    public String removeItemFromCart(@PathVariable Long productId,
+                                     Principal principal) {
         User user = userService.findByUsername(principal.getName()).orElse(null);
         if (user != null) {
-            cartService.removeItemFromCart(user, id);
+            cartService.removeItemFromCart(user, productId);
         }
         return "redirect:/cart";
     }

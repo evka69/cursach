@@ -14,10 +14,7 @@ import ru.flamexander.spring.security.jwt.repositories.CartItemRepository;
 import ru.flamexander.spring.security.jwt.repositories.CartRepository;
 import ru.flamexander.spring.security.jwt.repositories.ProductRepository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,18 +84,20 @@ public class CartService {
         }
     }
 
-    public void removeItemFromCart(User user, Long productId) {
-        Cart cart = getCartForUser(user);
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
-        cartItemRepository.findByCartAndProduct(cart, product).ifPresent(item -> {
-            if (item.getQuantity() > 1) {
-                item.setQuantity(item.getQuantity() - 1);
-                cartItemRepository.save(item);
-            } else {
-                cartItemRepository.delete(item);
-            }
+
+    public List<CartItem> getCartItemsForUser(User user) {
+        return cartRepository.findByUser(user)
+                .map(cartItemRepository::findByCart)
+                .orElse(new ArrayList<>());
+    }
+
+    public void removeItemFromCart(User user, Long productId) {
+        cartRepository.findByUser(user).ifPresent(cart -> {
+            productRepository.findById(productId).ifPresent(product -> {
+                cartItemRepository.findByCartAndProduct(cart, product)
+                        .ifPresent(cartItemRepository::delete);
+            });
         });
     }
 

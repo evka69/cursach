@@ -163,6 +163,34 @@
     border-bottom: 2px solid #eee;
     padding-bottom: 15px;
 }
+.disabled-btn {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #cccccc;
+}
+
+.error-message {
+    color: #d9534f;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ebccd1;
+    background-color: #f2dede;
+    border-radius: 4px;
+}
+
+.remove-btn {
+    background-color: #f8f9fa;
+    color: #dc3545;
+    border: 1px solid #dc3545;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
 
 .summary-row {
     display: flex;

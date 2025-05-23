@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/css/catalog.css">
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <div layout:fragment="content" class="">
     <div class="head2">
         <div class="search">
@@ -137,5 +139,27 @@
         </div>
     </div>
 </div>
+<script>
+    // Подключение к WebSocket
+    const socket = new SockJS('/ws');
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function(frame) {
+        stompClient.subscribe('/topic/products', function(message) {
+            const product = JSON.parse(message.body);
+            updateProductStock(product);
+        });
+    });
+
+    function updateProductStock(product) {
+        const productElement = document.querySelector(`[data-product-id="${product.id}"]`);
+        if (productElement) {
+            const stockElement = productElement.querySelector('.stock-info');
+            if (stockElement) {
+                stockElement.textContent = `Доступно: ${product.stock} из ${product.maxStock}`;
+            }
+        }
+    }
+</script>
 </body>
 </html>

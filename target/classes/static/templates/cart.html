@@ -10,6 +10,9 @@
 <div class="cart-container">
     <h1>Ваша корзина</h1>
 
+    <!-- Блок для отображения сообщений об ошибках -->
+    <div th:if="${error}" class="error-message" th:text="${error}"></div>
+
     <div th:if="${cartItems == null or cartItems.isEmpty()}" class="empty-cart">
         <p>Корзина пуста</p>
         <a href="/catalog" class="continue-shopping">Продолжить покупки</a>
@@ -19,7 +22,8 @@
         <div class="cart-items">
             <div th:each="item : ${cartItems}" class="cart-item">
                 <div class="item-image">
-                    <img th:src="${item.product.imagePath}" alt="Product Image">
+                    <img th:src="${item.product.imagePath != null} ? @{${item.product.imagePath}} : '/img/default.png'"
+                         th:alt="${item.product.name}">
                 </div>
                 <div class="item-details">
                     <h3 th:text="${item.product.name}">Product Name</h3>
@@ -27,18 +31,23 @@
                     <div class="quantity-controls">
                         <form th:action="@{/cart/edit/{id}(id=${item.product.id})}" method="post">
                             <input type="hidden" name="quantity" th:value="${item.quantity - 1}" />
-                            <button class="quantity-btn">-</button>
+                            <button type="submit" class="quantity-btn">-</button>
                         </form>
                         <span class="quantity" th:text="${item.quantity}"></span>
                         <form th:action="@{/cart/edit/{id}(id=${item.product.id})}" method="post">
                             <input type="hidden" name="quantity" th:value="${item.quantity + 1}" />
-                            <button class="quantity-btn">+</button>
+                            <button type="submit"
+                                    class="quantity-btn"
+                                    th:disabled="${item.quantity >= 10}"
+                                    th:classappend="${item.quantity >= 10} ? 'disabled-btn' : ''">+</button>
                         </form>
                     </div>
-
+                    <p class="stock-info" th:text="'Доступно: ' + ${item.product.stock} + ' шт.'"></p>
                 </div>
                 <div class="item-actions">
-                    <a th:href="@{/cart/remove/{id}(id=${item.product.id})}">Удалить</a>
+                    <form th:action="@{/cart/remove/{id}(id=${item.product.id})}" method="post">
+                        <button type="submit" class="remove-btn">Удалить</button>
+                    </form>
                 </div>
             </div>
         </div>

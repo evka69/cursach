@@ -49,12 +49,18 @@ public class OrderService {
         order.setItems(items);
         order.setTotalAmount(calculateTotalAmount(items));
 
+        // Уменьшаем количество товаров на складе
+        for (OrderItem item : items) {
+            productService.decreaseStock(item.getProduct().getId(), item.getQuantity());
+        }
+
         Order savedOrder = orderRepository.save(order);
         sendOrderConfirmationEmail(savedOrder);
         cartService.clearCart(user);
 
         return savedOrder;
     }
+
 
     private String formatAddress(OrderDto orderDto) {
         return String.format("%s, %s, д.%s%s",
