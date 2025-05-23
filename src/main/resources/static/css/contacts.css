@@ -1,0 +1,76 @@
+/* Основные стили страницы */
+.contacts-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.contacts-container h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.contacts-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.contacts-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+.contacts-map {
+    flex: 2;
+    min-width: 300px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили карточек с контактами */
+.contact-card {
+    background: #fff;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-card i {
+    font-size: 24px;
+    color: #4CAF50;
+    margin-bottom: 15px;
+}
+
+.contact-card h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.contact-card p {
+    margin: 0;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .contacts-content {
+        flex-direction: column;
+    }
+
+    .contacts-info, .contacts-map {
+        flex: none;
+        width: 100%;
+    }
+}
