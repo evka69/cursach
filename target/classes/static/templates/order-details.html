@@ -15,7 +15,7 @@
         <p><strong>Адрес доставки:</strong> <span th:text="${order.deliveryAddress}">г. Москва, ул. Ленина, д. 10, кв. 5</span></p>
         <p><strong>Email для связи:</strong> <span th:text="${order.email}">example@mail.com</span></p>
         <p><strong>Способ оплаты:</strong>
-            <span th:text="${order.paymentMethod == 'CASH' ? 'Наличными при получении' : 'Картой онлайн'}">Наличными при получении</span>
+            <span th:text="${order.paymentMethod == 'CASH' ? 'Наличными при получении' : 'Переводом при получении'}">Наличными при получении</span>
         </p>
         <p><strong>Комментарий к заказу:</strong> <span th:text="${order.comment != null ? order.comment : 'Отсутствует'}">Комментарий</span></p>
 
