@@ -27,39 +27,38 @@ public class AdminInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        // Инициализация ролей, если их нет
+        initRoles();
+
+        // Создание администратора
+        initAdmin();
+
+        // Создание тестовых пользователей
+        initRealUsers();
+    }
+
+    private void initRoles() {
+        if (!roleService.existsByName("ROLE_ADMIN")) {
+            Role adminRole = new Role();
+            adminRole.setName("ROLE_ADMIN");
+            roleRepository.save(adminRole);
+        }
+
+        if (!roleService.existsByName("ROLE_USER")) {
+            Role userRole = new Role();
+            userRole.setName("ROLE_USER");
+            roleRepository.save(userRole);
+        }
+    }
+
+    private void initAdmin() {
         if (!userService.existsByUsername("admin")) {
             User admin = new User();
             admin.setUsername("admin");
             admin.setEmail("admin@example.com");
             admin.setPassword(passwordEncoder.encode("password"));
 
-            Role adminRole = roleService.getRoleByName("ROLE_ADMIN")
-                    .orElseGet(() -> {
-                        Role newRole = new Role();
-                        newRole.setName("ROLE_ADMIN");
-                        return roleRepository.save(newRole);
-                    });
-
-            // Создаем админа с ролью через UserRoleService
             userRoleService.createUserWithRole(admin, roleService.getRoleIdByName("ROLE_ADMIN"));
-        }
-    }
-
-    private void initUser() {
-        if (!userService.existsByUsername("user1")) {
-            User user = new User();
-            user.setUsername("user1");
-            user.setEmail("user1@example.com");
-            user.setPassword(passwordEncoder.encode("123QWEasd!"));
-
-            Role userRole = roleService.getRoleByName("ROLE_USER")
-                    .orElseGet(() -> {
-                        Role newRole = new Role();
-                        newRole.setName("ROLE_USER");
-                        return roleRepository.save(newRole);
-                    });
-
-            userRoleService.createUserWithRole(user, roleService.getRoleIdByName("ROLE_USER"));
         }
     }
 
@@ -76,13 +75,13 @@ public class AdminInitializer implements CommandLineRunner {
                 "Пушкина", "2", "4");
         createRealUser("olga_vorobeva", "olga.vorobeva@example.com", "Анапа",
                 "Аминова", "12", "54");
-        createRealUser("alexey_fedorov",  "alexey.fedorov@example.com", "Краснодар",
+        createRealUser("alexey_fedorov", "alexey.fedorov@example.com", "Краснодар",
                 "Сулеймановой", "43", "65");
         createRealUser("maria_volkova", "maria.volkova@example.com", "Тюмень",
                 "Чехова", "34", "76");
         createRealUser("andrey_morozov", "andrey.morozov@example.com", "Керчь",
                 "Шевченко", "3", "87");
-        createRealUser("ekaterina_pavlova",  "ekaterina.pavlova@example.com", "Нефтеюганск",
+        createRealUser("ekaterina_pavlova", "ekaterina.pavlova@example.com", "Нефтеюганск",
                 "Ленина", "5", "6");
     }
 
@@ -96,17 +95,9 @@ public class AdminInitializer implements CommandLineRunner {
             user.setStreet(street);
             user.setHouse(house);
             user.setApartment(apartment);
-            user.setPassword(passwordEncoder.encode("PAssword123!")); // Стандартный пароль для всех тестовых пользователей
-
-            Role userRole = roleService.getRoleByName("ROLE_USER")
-                    .orElseGet(() -> {
-                        Role newRole = new Role();
-                        newRole.setName("ROLE_USER");
-                        return roleRepository.save(newRole);
-                    });
+            user.setPassword(passwordEncoder.encode("PAssword123!"));
 
             userRoleService.createUserWithRole(user, roleService.getRoleIdByName("ROLE_USER"));
         }
     }
-
 }

@@ -11,7 +11,6 @@ import java.util.Optional;
 public class RoleService {
     private final RoleRepository roleRepository;
 
-
     public Optional<Role> getRoleByName(String roleName) {
         return roleRepository.findByName(roleName);
     }
@@ -22,4 +21,7 @@ public class RoleService {
                 .orElseThrow(() -> new RuntimeException("Роль не найдена"));
     }
 
+    public boolean existsByName(String roleName) {
+        return roleRepository.existsByName(roleName);
+    }
 }
