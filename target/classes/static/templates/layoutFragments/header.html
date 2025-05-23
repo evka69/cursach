@@ -15,7 +15,7 @@
                     <li th:if="${authenticated}" >
                         <a th:if="${#request.isUserInRole('ROLE_USER')}" href="/cart">Корзина</a>
                     </li>
-                    <li><a href="/contact.html">Контакты</a></li>
+                    <li><a href="/contacts">Контакты</a></li>
                     <li sec:authorize="isAuthenticated()">
                         <a th:href="@{/profile}">Профиль</a>
                     </li>
