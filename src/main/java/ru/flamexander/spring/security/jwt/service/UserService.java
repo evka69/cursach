@@ -1,6 +1,8 @@
 package ru.flamexander.spring.security.jwt.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -163,9 +165,14 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public List<UserDto> getAllUsers() {
-        return userRepository.findAll().stream()
-                .map(user -> new UserDto(user.getId(), user.getUsername(), user.getEmail()))
-                .collect(Collectors.toList());
+    public Page<UserDto> getAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable)
+                .map(user -> new UserDto(user.getId(), user.getUsername(), user.getEmail()));
+    }
+
+    public Page<UserDto> searchUsers(String query, Pageable pageable) {
+        return userRepository.findByUsernameContainingIgnoreCaseOrEmailContainingIgnoreCase(
+                        query, query, pageable)
+                .map(user -> new UserDto(user.getId(), user.getUsername(), user.getEmail()));
     }
 }
