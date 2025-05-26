@@ -35,11 +35,6 @@
                     Посмотреть
                 </a>
 
-                <!-- Кнопка "Редактировать" -->
-                <a th:href="@{'/admin/users/edit/' + ${user.id}}"
-                   style="display: inline-block; padding: 6px 12px; margin-right: 5px; font-size: 14px; text-decoration: none; border-radius: 4px; background-color: #5cb85c; color: white; border: 1px solid #4cae4c; vertical-align: middle;">
-                    Редактировать
-                </a>
 
                 <!-- Форма с кнопкой "Удалить" -->
                 <form th:action="@{'/admin/users/delete/' + ${user.id}}" method="post" th:object="${user}" style="display: inline;">
