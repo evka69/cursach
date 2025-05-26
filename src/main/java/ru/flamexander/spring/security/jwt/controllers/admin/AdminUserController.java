@@ -57,10 +57,9 @@ public class AdminUserController {
 
     @GetMapping("/view/{id}")
     public String viewUser(@PathVariable Long id, Model model) {
-        User user = userService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Пользователь не найден"));
+        User user = userService.findUserWithOrdersById(id);
         model.addAttribute("user", user);
-        return "admin/user-view"; // новый шаблон
+        return "admin/user-view"; // Шаблон отображения профиля
     }
 
     @PostMapping("/delete/{id}")

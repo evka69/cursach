@@ -200,4 +200,11 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
         return true;
     }
+    public User findUserWithOrdersById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Пользователь не найден"));
+        // Загрузите заказы вручную, если они не подтягиваются автоматически
+        user.setOrders(orderRepository.findByUser_Id(id));
+        return user;
+    }
 }
