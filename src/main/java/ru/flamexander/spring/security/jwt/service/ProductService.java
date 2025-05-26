@@ -61,8 +61,17 @@ public class ProductService {
     }
 
     public Page<Product> searchProducts(String query, int page, int size) {
+        String processedQuery = getWordBase(query); // Приводим к основе слова
         Pageable pageable = PageRequest.of(page - 1, size);
-        return productRepository.searchProducts(query, pageable);
+        return productRepository.searchProducts("%" + processedQuery + "%", pageable);
+    }
+
+    private String getWordBase(String word) {
+        // Простая реализация стемминга для русского языка
+        word = word.toLowerCase()
+                .replaceAll("(ий|ый|ой|ая|ое|ие|ые|ой|ем|им|ом|его|ого|ему|ому|их|ых|ую|юю|ая|яя|ою|ею)$", "")
+                .replaceAll("(иям|ям|ием|ем|ам|ом|ами|ями|иях|ях|ы|ь|ию|ью|ю|я|а|е|о|и|ы|у)$", "");
+        return word;
     }
 
     public Optional<Product> findById(Long id) {

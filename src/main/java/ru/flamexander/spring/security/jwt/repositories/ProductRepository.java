@@ -15,8 +15,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // Методы с пагинацией
     Page<Product> findByCategory(String category, Pageable pageable);
 
-    @Query("SELECT p FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :query, '%')) " +
-            "OR LOWER(p.category) LIKE LOWER(CONCAT('%', :query, '%'))")
+    @Query("SELECT p FROM Product p WHERE " +
+            "LOWER(p.name) LIKE LOWER(CONCAT('%', :query, '%')) OR " +
+            "LOWER(p.category) LIKE LOWER(CONCAT('%', :query, '%'))")
     Page<Product> searchProducts(@Param("query") String query, Pageable pageable);
 
     // Стандартные методы JpaRepository
