@@ -1,17 +1,17 @@
 /* Основные стили для страницы списка пользователей */
-
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5f7fa;
-    margin: 40px;
+    margin: 0;
+    padding: 20px;
     color: #333;
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     background-color: #fff;
-    padding: 30px 40px;
+    padding: 30px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     border-radius: 8px;
 }
@@ -24,10 +24,56 @@ h1 {
     font-weight: 600;
 }
 
+/* Стили для формы поиска */
+.search-form {
+    margin-bottom: 25px;
+    display: flex;
+    gap: 10px;
+}
+
+.search-form input[type="text"] {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.search-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.search-form button:hover {
+    background-color: #0069d9;
+}
+
+.search-form .reset-btn {
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.search-form .reset-btn:hover {
+    background-color: #5a6268;
+}
+
+/* Стили для таблицы */
 table {
     width: 100%;
     border-collapse: collapse;
     font-size: 1rem;
+    margin-bottom: 20px;
 }
 
 thead tr {
@@ -46,8 +92,7 @@ tbody tr:nth-child(even) {
 }
 
 tbody tr:hover {
-    background-color: #dbe9ff;
-    cursor: default;
+    background-color: #f0f7ff;
 }
 
 th {
@@ -58,50 +103,90 @@ td {
     vertical-align: middle;
 }
 
-/* Если понадобится кнопка, например, удалить пользователя */
-.btn-delete {
-    background-color: #e74c3c;
-    color: white;
+/* Стили для кнопок действий */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 8px 16px;
     border: none;
-    padding: 8px 14px;
-    border-radius: 5px;
-    font-weight: 600;
+    border-radius: 4px;
     cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: white;
+    text-decoration: none;
     transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-view {
+    background-color: #17a2b8;
+}
+
+.btn-view:hover {
+    background-color: #138496;
+}
+
+.btn-edit {
+    background-color: #28a745;
+}
+
+.btn-edit:hover {
+    background-color: #218838;
+}
+
+.btn-delete {
+    background-color: #dc3545;
 }
 
 .btn-delete:hover {
-    background-color: #c0392b;
+    background-color: #c82333;
 }
- /* Минимальная стилизация кнопок */
-        .btn {
-            padding: 6px 12px;
-            margin-right: 6px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: white;
-            transition: background-color 0.3s ease;
-        }
-        .btn-view {
-            background-color: #17a2b8; /* синий */
-        }
-        .btn-view:hover {
-            background-color: #138496;
-        }
-        .btn-edit {
-            background-color: #ffc107; /* жёлтый */
-            color: #212529;
-        }
-        .btn-edit:hover {
-            background-color: #e0a800;
-        }
-        .btn-delete {
-            background-color: #dc3545; /* красный */
-        }
-        .btn-delete:hover {
-            background-color: #c82333;
-        }
 
+.btn-orders {
+    background-color: #6c757d;
+    margin-top: 20px;
+}
+
+.btn-orders:hover {
+    background-color: #5a6268;
+}
+
+/* Стили для пагинации */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+    gap: 5px;
+}
+
+.pagination a {
+    padding: 8px 16px;
+    border: 1px solid #dee2e6;
+    color: #007bff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #e9ecef;
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination a.disabled {
+    color: #6c757d;
+    pointer-events: none;
+    cursor: default;
+}

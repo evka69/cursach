@@ -38,4 +38,15 @@ public class Order {
             status = "NEW";  // статус по умолчанию при создании заказа
         }
     }
+
+    public String getStatusDescription() {
+        return switch (status) {
+            case "NEW" -> "Новый";
+            case "PROCESSING" -> "В обработке";
+            case "SHIPPED" -> "Отправлен";
+            case "DELIVERED" -> "Доставлен";
+            case "CANCELLED" -> "Отменен";
+            default -> status;
+        };
+    }
 }

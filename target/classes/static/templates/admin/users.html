@@ -9,10 +9,16 @@
 <body>
 <div class="container">
     <h1>Все зарегистрированные пользователи</h1>
+
+    <form th:action="@{/admin/users}" method="get" class="search-form">
+        <input type="text" name="search" placeholder="Поиск по имени или email" th:value="${searchQuery}">
+        <button type="submit">Найти</button>
+        <a th:href="@{/admin/users}" th:if="${searchQuery != null}" class="reset-btn">Сбросить</a>
+    </form>
+
     <table>
         <thead>
         <tr>
-            <th>ID</th>
             <th>Логин</th>
             <th>Email</th>
             <th sec:authorize="hasRole('ADMIN')">Действия</th>
@@ -20,7 +26,6 @@
         </thead>
         <tbody>
         <tr th:each="user : ${users}">
-            <td th:text="${user.id}">1</td>
             <td th:text="${user.username}">username</td>
             <td th:text="${user.email}">email@example.com</td>
             <td sec:authorize="hasRole('ADMIN')">
@@ -49,8 +54,24 @@
         </tr>
         </tbody>
     </table>
-    <a href="/admin/orders"
-       style="display: inline-block; padding: 6px 12px; margin-right: 5px; font-size: 14px; text-decoration: none; border-radius: 4px; background-color: #f0ad4e; color: white; border: 1px solid #eea236; vertical-align: middle;">
+    <div th:if="${totalPages > 1}" class="pagination">
+        <a th:if="${currentPage > 1}"
+           th:href="@{/admin/users(search=${searchQuery}, page=${currentPage - 1}, size=${pageSize})}">
+            &laquo; Назад
+        </a>
+
+        <a th:each="i : ${#numbers.sequence(1, totalPages)}"
+           th:href="@{/admin/users(search=${searchQuery}, page=${i}, size=${pageSize})}"
+           th:text="${i}"
+           th:classappend="${i == currentPage} ? 'active' : ''">
+        </a>
+
+        <a th:if="${currentPage < totalPages}"
+           th:href="@{/admin/users(search=${searchQuery}, page=${currentPage + 1}, size=${pageSize})}">
+            Вперёд &raquo;
+        </a>
+    </div>
+    <a href="/admin/orders" style="display: inline-block; padding: 6px 12px; margin-right: 5px; font-size: 14px; text-decoration: none; border-radius: 4px; background-color: #f0ad4e; color: white; border: 1px solid #eea236; vertical-align: middle;">
         Заказы
     </a></div>
 </body>

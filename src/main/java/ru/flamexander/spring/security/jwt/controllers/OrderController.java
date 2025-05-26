@@ -19,6 +19,7 @@ import ru.flamexander.spring.security.jwt.service.ProductService;
 import ru.flamexander.spring.security.jwt.service.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class OrderController {
@@ -85,11 +86,11 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/order-success")
-    public String orderSuccess(@ModelAttribute("order") Order order, Model model) {
-        if (order == null || order.getId() == null) {
-            return "redirect:/";
-        }
-        return "order-success";
+    @GetMapping("/my")
+    public String showUserOrders(Model model, Principal principal) {
+        User user = userService.findByUsername(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        model.addAttribute("orders", orderService.getOrdersByUser(user));
+        return "profile-view";
     }
 }

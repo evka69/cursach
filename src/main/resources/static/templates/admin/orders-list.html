@@ -26,7 +26,20 @@
         <td th:text="${order.user.username}">user</td>
         <td th:text="${#temporals.format(order.createdAt, 'dd.MM.yyyy HH:mm')}">01.01.2023</td>
         <td th:text="${order.totalAmount}">1000</td>
-        <td th:text="${order.status}">NEW</td>
+        <td>
+            <span th:text="${order.statusDescription}" th:class="'status-' + ${order.status}"></span>
+        </td>
+        <td>
+            <form th:action="@{/admin/orders/{id}/update-status(id=${order.id})}" method="post">
+                <select name="newStatus" onchange="this.form.submit()">
+                    <option th:value="'NEW'" th:selected="${order.status == 'NEW'}">Новый</option>
+                    <option th:value="'PROCESSING'" th:selected="${order.status == 'PROCESSING'}">В обработке</option>
+                    <option th:value="'SHIPPED'" th:selected="${order.status == 'SHIPPED'}">Отправлен</option>
+                    <option th:value="'DELIVERED'" th:selected="${order.status == 'DELIVERED'}">Доставлен</option>
+                    <option th:value="'CANCELLED'" th:selected="${order.status == 'CANCELLED'}">Отменен</option>
+                </select>
+            </form>
+        </td>
     </tr>
     </tbody>
 </table>

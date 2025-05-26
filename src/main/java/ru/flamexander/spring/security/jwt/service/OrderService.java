@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 @RequiredArgsConstructor
 public class OrderService {
@@ -129,6 +131,7 @@ public class OrderService {
         return sb.toString();
     }
 
+
     private String getPaymentMethodName(String method) {
         return method.equals("CASH") ? "Наличными при получении" : "Картой при получении";
     }
@@ -145,19 +148,22 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public List<Order> getAllOrders() {
-        return orderRepository.findAllByOrderByCreatedAtDesc();
+    public List<Order> getOrdersByUser(User user) {
+        return orderRepository.findByUser(user);
     }
 
-    @Transactional
+    public List<Order> getAllOrders() {
+        return orderRepository.findAll();
+    }
+
     public void updateOrderStatus(Long orderId, String newStatus) {
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new IllegalArgumentException("Заказ не найден"));
+                .orElseThrow(() -> new EntityNotFoundException("Order not found"));
         order.setStatus(newStatus);
         orderRepository.save(order);
     }
-    @Transactional(readOnly = true)
-    public List<Order> getOrdersByUser(User user) {
+
+    public List<Order> getUserOrders(User user) {
         return orderRepository.findByUser(user);
     }
 
