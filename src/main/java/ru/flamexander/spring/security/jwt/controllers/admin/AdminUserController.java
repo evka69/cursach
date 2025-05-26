@@ -4,14 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.flamexander.spring.security.jwt.dtos.UserDto;
+import ru.flamexander.spring.security.jwt.entities.User;
 import ru.flamexander.spring.security.jwt.service.UserService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/users")
@@ -49,5 +53,28 @@ public class AdminUserController {
         model.addAttribute("pageSize", size);
 
         return "admin/users";
+    }
+
+    @GetMapping("/view/{id}")
+    public String viewUser(@PathVariable Long id, Model model) {
+        User user = userService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Пользователь не найден"));
+        model.addAttribute("user", user);
+        return "admin/user-view"; // новый шаблон
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            boolean deleted = userService.deleteUserIfAllowed(id);
+            if (deleted) {
+                redirectAttributes.addFlashAttribute("success", "Пользователь успешно удален");
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Пользователь не найден");
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Ошибка удаления: " + e.getMessage());
+        }
+        return "redirect:/admin/users";
     }
 }

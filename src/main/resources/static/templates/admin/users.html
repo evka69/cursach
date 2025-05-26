@@ -36,6 +36,7 @@
                 </a>
 
 
+
                 <!-- Форма с кнопкой "Удалить" -->
                 <form th:action="@{'/admin/users/delete/' + ${user.id}}" method="post" th:object="${user}" style="display: inline;">
                     <input type="hidden" name="_method" value="delete" />

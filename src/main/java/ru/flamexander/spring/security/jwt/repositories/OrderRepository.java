@@ -10,4 +10,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByUser(User user);
 
     List<Order> findAllByOrderByCreatedAtDesc();  // для получения всех заказов, отсортированных по дате
+
+    List<Order> findByUser_Id(Long userId);
 }

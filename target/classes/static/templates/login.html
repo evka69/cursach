@@ -28,6 +28,41 @@
         <p style="text-align: center; margin-top: 10px;">
             <a href="/password-reset/request">Забыли пароль?</a>
         </p>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const createEyeIcon = () => `
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                    </svg>
+                `;
+
+                const addPasswordToggle = function (inputId) {
+                    const input = document.getElementById(inputId);
+                    if (!input) return;
+
+                    const toggleBtn = document.createElement('button');
+                    toggleBtn.type = 'button';
+                    toggleBtn.innerHTML = createEyeIcon();
+                    toggleBtn.classList.add('password-toggle-btn');
+
+                    const parent = input.parentElement;
+                    parent.style.position = 'relative';
+                    parent.appendChild(toggleBtn);
+
+                    toggleBtn.addEventListener('click', function () {
+                        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                        input.setAttribute('type', type);
+                        const svgPath = toggleBtn.querySelector('path');
+                        if (svgPath) {
+                            svgPath.setAttribute('fill', type === 'text' ? '#333' : '#888');
+                        }
+                    });
+                };
+
+                // Добавляем глазок к полю пароля
+                addPasswordToggle('password');
+            });
+        </script>
     </div>
 </div>
 </body>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout}"
+      lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Просмотр пользователя</title>
+    <link th:href="@{/css/user-profile.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="container">
+    <h1>Профиль пользователя</h1>
+    <div class="profile-card">
+        <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
+        <p><strong>Логин:</strong> <span th:text="${user.username}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
+        <p><strong>Адрес:</strong>
+            <span th:text="${user.city + ', ' + user.street + ', д.' + user.house + ', кв.' + user.apartment}">-</span>
+        </p>
+        <p><strong>Дата регистрации:</strong> <span th:text="${#temporals.format(user.createdAt, 'dd.MM.yyyy HH:mm')}">-</span></p>
+
+        <h3>Заказы пользователя</h3>
+        <table th:if="${!#lists.isEmpty(user.orders)}">
+            <thead>
+            <tr>
+                <th>ID заказа</th>
+                <th>Дата</th>
+                <th>Статус</th>
+                <th>Сумма</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${user.orders}">
+                <td th:text="${order.id}">ID</td>
+                <td th:text="${#temporals.format(order.createdAt, 'dd.MM.yyyy HH:mm')}">Дата</td>
+                <td th:text="${order.status}">Статус</td>
+                <td th:text="${order.totalAmount}">Сумма</td>
+            </tr>
+            </tbody>
+        </table>
+        <p th:if="${#lists.isEmpty(user.orders)}">У пользователя нет заказов.</p>
+    </div>
+    <a href="/admin/users" class="btn-back">Назад к списку</a>
+</div>
+</body>
+</html>

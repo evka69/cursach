@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.flamexander.spring.security.jwt.dtos.RegistrationUserDto;
 import ru.flamexander.spring.security.jwt.dtos.UserDto;
 import ru.flamexander.spring.security.jwt.dtos.UserProfileUpdateDto;
+import ru.flamexander.spring.security.jwt.entities.Order;
 import ru.flamexander.spring.security.jwt.entities.User;
+import ru.flamexander.spring.security.jwt.repositories.OrderRepository;
 import ru.flamexander.spring.security.jwt.repositories.UserRepository;
 
 import java.util.List;
@@ -27,16 +29,18 @@ public class UserService implements UserDetailsService {
     private final RoleService roleService;
     private final UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
+    private final OrderRepository orderRepository;
 
     @Autowired
     public UserService(UserRepository userRepository,
                        RoleService roleService,
                        UserRoleService userRoleService,
-                       PasswordEncoder passwordEncoder) {
+                       PasswordEncoder passwordEncoder, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.userRoleService = userRoleService;
         this.passwordEncoder = passwordEncoder;
+        this.orderRepository = orderRepository;
     }
 
     public void createUser(User user) {
@@ -174,5 +178,26 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsernameContainingIgnoreCaseOrEmailContainingIgnoreCase(
                         query, query, pageable)
                 .map(user -> new UserDto(user.getId(), user.getUsername(), user.getEmail()));
+    }
+
+    @Transactional(readOnly = true)
+    public boolean canDeleteUser(Long userId) {
+        List<Order> orders = orderRepository.findByUser_Id(userId);
+        return orders.stream().allMatch(order ->
+                order.getStatus().equalsIgnoreCase("CANCELLED") ||
+                        order.getStatus().equalsIgnoreCase("NEW")
+        );
+    }
+
+    @Transactional
+    public boolean deleteUserIfAllowed(Long id) {
+        if (!userRepository.existsById(id)) {
+            return false;
+        }
+        if (!canDeleteUser(id)) {
+            throw new IllegalStateException("Невозможно удалить пользователя — есть активные заказы");
+        }
+        userRepository.deleteById(id);
+        return true;
     }
 }
